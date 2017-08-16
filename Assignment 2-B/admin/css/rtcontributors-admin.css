@@ -1,0 +1,16 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+ 	
+ .contributors-metabox {
+
+ 	max-height: 150px;
+    overflow: auto;
+ }
+
+ #search_author {
+	width: 100% !important;
+
+}

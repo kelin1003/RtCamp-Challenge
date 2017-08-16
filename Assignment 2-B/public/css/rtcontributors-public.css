@@ -1,0 +1,33 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+ .rtcc-coauthor-display {
+ 	font-size: .8em;
+ }
+
+ .custm {
+ 	border:1px solid #cecece;
+ 	padding: 10px;
+ 	padding-top:3px;
+ 	border-radius: 5px;
+
+
+ }
+
+ .rtcc-author-link {
+ 	font-size: .7em;
+ 	text-align: center !important;
+ }
+
+.author-avatar {
+	width: 50px;
+	
+}
+
+.author-avatar > img {
+	border-radius: 100px;
+
+}
+
