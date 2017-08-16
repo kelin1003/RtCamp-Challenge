@@ -29,7 +29,7 @@ The shortcode will look like this:
 [rtc_challenge_a id="478"]
 ```
 
-#### To use the Assignment 2-A ( RtChallenge-A ):
+#### To use the Assignment 2-B ( RtContributors ):
 
 After installing the plugin you can add the Contributors / Co-Authors directly from your usual Add New Post / Edit Post screen. Just besides the Text Editor you will be able to see the list of users to choose from, you can also search them!.
 Select all the contributors and publish the post. You will be able to see the list of authors at the end of the post.
