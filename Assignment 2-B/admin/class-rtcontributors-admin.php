@@ -146,9 +146,9 @@ class Rtcontributors_Admin {
 			if( $post ) {
 
 				if( in_array( $user->data->ID, $coAuthors ) ) {
-					echo '<label  style="display:block;margin-bottom:3px" for="'.$user->data->ID.'" ><input data-rtcname="'.$user->data->user_email.' '.$user->data->user_nicename.'" checked type="checkbox" name="rtcc-authors[]" id="'.$user->data->ID.'" form="post" value= "'.$user->data->ID.'">'.$user->data->user_nicename.' ('.$user->data->user_email.')</label>';		
+					echo '<label  style="display:block;margin-bottom:4px" for="'.$user->data->ID.'" ><input data-rtcname="'.$user->data->user_email.' '.$user->data->display_name.'" checked type="checkbox" name="rtcc-authors[]" id="'.$user->data->ID.'" form="post" value= "'.$user->data->ID.'">'.$user->data->display_name.'<p style="font-size:.7em;display:inline"> ('.$user->data->user_email.')</p></label>';		
 				} else {
-					echo '<label style="display:block;margin-bottom:3px" for="'.$user->data->ID.'" ><input data-rtcname="'.$user->data->user_email.' '.$user->data->user_nicename.'" type="checkbox" name="rtcc-authors[]" id="'.$user->data->ID.'" form="post" value= "'.$user->data->ID.'">'.$user->data->user_nicename.' ('.$user->data->user_email.')</label>';
+					echo '<label style="display:block;margin-bottom:4px" for="'.$user->data->ID.'" ><input data-rtcname="'.$user->data->user_email.' '.$user->data->display_name.'" type="checkbox" name="rtcc-authors[]" id="'.$user->data->ID.'" form="post" value= "'.$user->data->ID.'">'.$user->data->display_name.'<p style="font-size:.7em;display:inline"> ('.$user->data->user_email.')</p></label>';
 				}
 			}
 
@@ -164,8 +164,9 @@ class Rtcontributors_Admin {
 				
 
 				function searchAuthor(val) {
+					// val = val.toLowerCase();
 					for(var i=0;i<all.length;i++) {
-						var tmp = all[i].childNodes[0].getAttribute("data-rtcname");
+						var tmp = all[i].childNodes[0].getAttribute("data-rtcname").toLowerCase();
 						if( tmp.indexOf( val ) !== -1 ){
 							all[i].style = "display:block";
 							console.log(all[i].childNodes[0]);
@@ -272,7 +273,7 @@ class Rtcontributors_Admin {
 			$coAuthors = explode( ',', $coAuthors );
 			
 			foreach ($coAuthors as $coAuthor) {
-				$o .= get_userdata( $coAuthor )->user_nicename.' ,';	
+				$o .= get_userdata( $coAuthor )->display_name.' ,';	
 			}
 
 			echo substr($o,0,$o.length-1);

@@ -142,7 +142,8 @@ class Rtchallenge_Admin {
 			'labels' => $labels,
 			'public' => true,
 			'capability_type' => 'post',
-			'supports' => array( 'title', 'thumbnail', '' )
+			'supports' => array( 'title', 'thumbnail', '' ),
+			'menu_icon' => 'dashicons-format-gallery'
 
 		);
 

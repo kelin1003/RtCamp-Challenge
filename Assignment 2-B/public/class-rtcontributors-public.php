@@ -137,7 +137,7 @@ class Rtcontributors_Public {
 						<div class="author-avatar">
 							'.get_avatar( $author->data->ID ).'
 						</div>
-					<center>'.$author->data->user_nicename.'<center>
+					<center>'.explode(' ',$author->data->display_name)[0].'<center>
 					</a>
 				</div>
 				
