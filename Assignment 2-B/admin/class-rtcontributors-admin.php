@@ -139,7 +139,7 @@ class Rtcontributors_Admin {
 
 		foreach ($usersList as $user) {
 
-			if( get_current_user_id() == $user->data->ID ) {
+			if( $user->data->ID == $post->post_author ) {
 				continue;
 			}
 
@@ -252,7 +252,7 @@ class Rtcontributors_Admin {
 
 	function rtcc_add_column_header_author( $default ) {
 		
-			$new_default = array( 'custom_author' => __('Author') );	
+			$new_default = array( 'coauthors' => __('Co-Authors') );	
 		
 		return array_merge( $default, $new_default);
 	}
@@ -262,14 +262,9 @@ class Rtcontributors_Admin {
 	 * @since    1.0.0
 	 */
 	function rtcc_add_content_to_author_column( $column_name, $post_id  ) {
-		global $wpdb;
-		if( $column_name == 'custom_author' ) {
-			$results = $wpdb->get_results("SELECT post_author from wp_posts where ID = ".$post_id);
-
-			$o = $results[0]->post_author;
-
-			$o = get_userdata( $o )->user_nicename;
-			echo $o;
+		
+		if( $column_name == 'coauthors' ) {
+			
 			$o ='';
 
 			$coAuthors = get_post_meta( $post_id, 'rtcc_coauthors', true );
@@ -277,11 +272,11 @@ class Rtcontributors_Admin {
 			$coAuthors = explode( ',', $coAuthors );
 			
 			foreach ($coAuthors as $coAuthor) {
-				$o .= ', '.get_userdata( $coAuthor )->user_nicename;	
+				$o .= get_userdata( $coAuthor )->user_nicename.' ,';	
 			}
 
-			// echo substr($o,0,$o.length-1);
-			echo $o;
+			echo substr($o,0,$o.length-1);
+			
 		}
 
 	}
@@ -290,10 +285,10 @@ class Rtcontributors_Admin {
 	 * This function removes the actual authors post list column.
 	 * @since    1.0.0
 	 */
-	function rtcc_remove_authors_column( $columns ) {
-		unset($columns['author']);
-		return $columns;
-	}
+	// function rtcc_remove_authors_column( $columns ) {
+	// 	unset($columns['author']);
+	// 	return $columns;
+	// }
 	
 
 

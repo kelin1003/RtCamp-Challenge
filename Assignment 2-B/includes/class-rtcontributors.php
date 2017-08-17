@@ -155,7 +155,7 @@ class Rtcontributors {
 
 		// add_shortcode( 'rtc_coauthors', array('Rtcontributors_Admin','rtcc_coauthors_shortcode') );
 
-		$this->loader->add_filter( 'manage_edit-post_columns',$plugin_admin, 'rtcc_remove_authors_column',10, 1 );
+		// $this->loader->add_filter( 'manage_edit-post_columns',$plugin_admin, 'rtcc_remove_authors_column',10, 1 );
 		
 		$this->loader->add_action( 'manage_'.$post_type.'s_columns', $plugin_admin,'rtcc_add_column_header_author', 10, 2 );
 		//to add content to the above generated column
