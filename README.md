@@ -1,6 +1,6 @@
 # RtCamp's Challenge - Wordpress Assignment-2
 
-This is a Wordpress Plugin created to complete the RtCamp's Wordpress Assignment Challenge.
+This is a repository containing Wordpress Plugins created to complete the RtCamp's Wordpress Challenge.
 
 The Repository contains two folders named Assignement 2-A and Assignment 2-B.
 
@@ -16,12 +16,20 @@ It is a wordpress plugin that allows you to add muliple authors or contributors 
 
 ## Getting Started
 
+### Installation
+
+#### Method-1
 Download the zip or Clone the project and copy the respective folders into the wordpress->wp_content->pulgins directory on your server.<br>
+
+
+#### Method-2
+Download the zip or Clone the project zip both the assignment folder, head over to the plugins settings page in the admin side and click on Add New, Choose the above created zip and install them one by one
+
 To use the pligins simply login to your Wordpress account and in the Plugins Settings page Activate 'RtChallenge-A' and 'RtContributors' plugins.
 
 #### To use the Assignment 2-A ( RtChallenge-A ):
 
-Once you installed the plugin, go to newly added 'Upload Photos Setting' in the Side bar of the Dashboard. It provides an  interface to manage your multiple galleries. You can add new Gallery or edit the existing galleries.<br>
+Once you installed the plugin, go to newly added 'Upload Photos Setting' in the Side bar of the Dashboard. It provides an  interface to manage your multiple galleries. You can add new Gallery or edit the existing ones.<br>
 Entering the Add New / Edit gallery Click on 'Upload Image' button, choose some pictures and save them. You can arrange the order of the images by dragging the images around. Once done, click on publish button. Now simply click on the button that shows shortcode, head towards your post, paste and There you go!.
 
 The shortcode will look like this:
