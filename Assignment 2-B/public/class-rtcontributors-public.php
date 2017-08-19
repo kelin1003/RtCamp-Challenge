@@ -113,11 +113,9 @@ class Rtcontributors_Public {
 
 		ob_start();
 
-		$coAuthors = get_post_meta( $post->ID, 'rtcc_coauthors', true );
+		$coAuthors = get_post_meta( $post->ID, 'rtcc_coauthors' );
 		if(!$coAuthors) return $content;
 
-		$coAuthors = explode( ',', $coAuthors );
-		
 
 
 		echo '<br><br>
@@ -153,6 +151,67 @@ class Rtcontributors_Public {
 		return $content.ob_get_clean();
 
 	}
+	
+	/**
+	 * To check if the authors page is accessed.
+	 *
+	 * @since    1.0.0
+	 */
+	public function rtcc_before_display_authors_page( $query ) {
+
+		if(is_admin() || !$query->query["author_name"]) {
+			return;	
+		}		
+
+		$GLOBALS['_rtc_author_name'] = $query->query["author_name"];
+		// $query->set('post__in',[])
+
+	}
+
+	/**
+	 * To add the posts to the authors page in which he/she has contributed.
+	 *
+	 * @since    1.0.0
+	 */
+	public function rtcc_before_display_authors_page_helper( $posts ) {
+
+		
+		
+		global $wpdb;
+		if( $GLOBALS['_rtc_author_name'] ) {
+
+			//To add author to the post
+			foreach ($posts as $post) {
+				$post->post_title = $post->post_title."<span style='font-size: .6em;'>(Author)</span>";
+			}
+			
+			$author = $GLOBALS['_rtc_author_name'];
+			unset($GLOBALS['_rtc_author_name']);
+
+			$author = get_user_by('slug', $author);
+			if( !$author ) return;
+
+			$results = $wpdb->get_results( "SELECT post_id from wp_postmeta WHERE meta_key = 'rtcc_coauthors' AND meta_value = '".$author->ID."'" );
+			foreach ($results as $value) {
+
+
+				$post = get_post($value->post_id);
+				$writtenby = get_userdata( $post->post_author );
+
+				if( $post && $post->post_status=='publish'){
+					$post->post_title = $post->post_title."<span style='font-size: .6em;'>(Contributor)</span>";
+
+					$post->post_content = "<span style='font-size: 1em;color:;margin-bottom:10px'>Written By: <a href='".get_author_posts_url($writtenby->ID)."'>".$writtenby->display_name."</a> </span><br><br><br>".$post->post_content;
+					array_push( $posts, $post );
+				}
+			}
+
+		}
+
+		return $posts;
+	}
+
+
 
 
 }

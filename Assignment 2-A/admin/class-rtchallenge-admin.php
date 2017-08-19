@@ -227,7 +227,7 @@ class Rtchallenge_Admin {
 		global $post;
 		$post_id = $post->ID;
 		?>
-			<button style="cursor: pointer" onclick="copyToClipboard('#rt_<?php echo $post_id; ?>')"><p id="rt_<?php echo $post_id; ?>">[rtc_challenge_a id="<?php echo $post_id; ?>"]</p></button>
+			<button style="cursor: pointer" onclick="copyToClipboard('#rt_<?php echo $post_id; ?>')"><span id="rt_<?php echo $post_id; ?>">[rtc_challenge_a id="<?php echo $post_id; ?>"]</span></button>
 
 				<script type="text/javascript">
 				var $ = jQuery;
@@ -298,7 +298,7 @@ class Rtchallenge_Admin {
 	 */
 	function rtc_slider_shortcode( $atts = [], $content = null, $tags = [] ) {
 
-		global $wpdb;
+		global $wpdb, $post;
 
 		ob_start();
 
@@ -317,7 +317,7 @@ class Rtchallenge_Admin {
 	    echo '<div class="slideshow-container">';
 	    $post_content;
 	 
-		$result = $wpdb->get_results( "select post_content from $wpdb->posts where id = ".$rtc_atts['id'] );
+		$result = $wpdb->get_results( "select id,post_content from $wpdb->posts where id = ".$rtc_atts['id'] );
 
 		if ( ! empty( $result ) ) {
 			$post_content = $result[0]->post_content;
@@ -329,7 +329,7 @@ class Rtchallenge_Admin {
 
 	    
 	    $arr = explode('<li ',$post_content);
-	    
+	    $cls = $result[0]->id.''.$post->ID;
 	    // var_dump($arr);
 	    $counter = 0;
 	    foreach ($arr as $value) {
@@ -339,10 +339,10 @@ class Rtchallenge_Admin {
 
 	    	
 
-	    	echo '<div class="mySlides fade"><div class="numbertext">  '.++$counter.' / '.(sizeof($arr)-1).'</div><img '.$temp[1].'<div class="text"></div></div>';
+	    	echo '<div class="mySlides '.$cls.' fade"><div class="numbertext">  '.++$counter.' / '.(sizeof($arr)-1).'</div><img '.$temp[1].'<div class="text"></div></div>';
 	    }
 
-	    echo  '<a class="prev" onclick="plusSlides(-1)">&#10094;</a><a class="next" onclick="plusSlides(1)">&#10095;</a>';
+	    echo  '<a class="prev" onclick="plusSlides(-1,'.$cls.')">&#10094;</a><a class="next" onclick="plusSlides(1,'.$cls.')">&#10095;</a>';
 
 	    echo '</div><br><div style="text-align:center">';
 	    $counter = 1;
@@ -353,6 +353,14 @@ class Rtchallenge_Admin {
 	    }
 
 	    echo '</div>';
+
+	    echo '<script>
+	    			
+	    			jQuery(document).ready(function(){
+	    				showSlides(1,'.$cls.');	
+	    			});
+	    			
+	   		 </script>';
 
 
 
@@ -373,12 +381,12 @@ class Rtchallenge_Admin {
 	function rtc_add_images_to_content( $post_id, $post, $update ) {
 		global $wpdb;
 
-			$images = array_map( 'stripslashes_deep', $_REQUEST);
+			$REQUEST = array_map( 'stripslashes_deep', $_REQUEST);
 
 
 		
-		if ( !empty($images['images-hidden']) && $images['images-hidden'] != "" ) {
-			$results = $wpdb->update( "wp_posts", [ "post_content" => $images['images-hidden'] ], [ "ID" => $post_id ] );
+		if ( !empty($REQUEST['images-hidden']) && $REQUEST['images-hidden'] != "" ) {
+			$results = $wpdb->update( "wp_posts", [ "post_content" => $REQUEST['images-hidden'], "post_status" => "rtc_status" ], [ "ID" => $post_id ] );
 		}
 
 		// var_dump( $results );
@@ -437,6 +445,24 @@ class Rtchallenge_Admin {
 			
 		}
 
+		
+	}
+
+
+	function rtc_register_custom_post_status() {
+
+		
+		$args = array(
+			'public' => false,
+			'label' => 'Other Galleries',
+			'internal' => true,
+			'private' => true,
+			'show_in_admin_all_list' => true,
+			'show_in_admin_status_list' => true
+			
+		);
+
+		register_post_status('rtc_status',$args);
 		
 	}
 

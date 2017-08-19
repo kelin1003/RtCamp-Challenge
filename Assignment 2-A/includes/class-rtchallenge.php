@@ -155,6 +155,7 @@ class Rtchallenge {
 
 		$plugin_admin = new Rtchallenge_Admin( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_action( 'init', $plugin_admin,'rtc_register_custom_post_status' );
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'rtc_display_admin_page' );
 
@@ -189,6 +190,8 @@ class Rtchallenge {
 	private function define_public_hooks() {
 
 		$plugin_public = new Rtchallenge_Public( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'exclude_ptype_image' );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );

@@ -127,8 +127,9 @@ class Rtcontributors_Admin {
 		$usersList = get_users( [ 'role__not_in' => [ 'subscriber' ] ]);
 		
 		if( $post ) {
-			$coAuthors = get_post_meta( $post->ID, 'rtcc_coauthors', true );
-			$coAuthors = explode( ',', $coAuthors );
+			$coAuthors = get_post_meta( $post->ID, 'rtcc_coauthors' );
+			// $coAuthors = explode( ',', $coAuthors );
+
 		}
 
 		echo '<input tpye="text" id="search_author" onkeyup="searchAuthor(this.value);" placeholder="Enter Name / Email"/><br><br>';
@@ -144,7 +145,7 @@ class Rtcontributors_Admin {
 			}
 
 			if( $post ) {
-
+				
 				if( in_array( $user->data->ID, $coAuthors ) ) {
 					echo '<label  style="display:block;margin-bottom:4px" for="'.$user->data->ID.'" ><input data-rtcname="'.$user->data->user_email.' '.$user->data->display_name.'" checked type="checkbox" name="rtcc-authors[]" id="'.$user->data->ID.'" form="post" value= "'.$user->data->ID.'">'.$user->data->display_name.'<p style="font-size:.7em;display:inline"> ('.$user->data->user_email.')</p></label>';		
 				} else {
@@ -201,9 +202,14 @@ class Rtcontributors_Admin {
 		}
 		
 		$authorIds = $_REQUEST['rtcc-authors'];
-		$authorIds = implode(',',$authorIds);
-		delete_post_meta( $post->ID, 'rtcc_coauthors' );
-		add_post_meta( $post->ID, 'rtcc_coauthors', $authorIds, true );
+		if( $authorIds ) {
+			delete_post_meta( $post->ID, 'rtcc_coauthors' );	
+		}
+		
+		foreach ($authorIds as $id) {
+			add_post_meta( $post->ID, 'rtcc_coauthors', $id, false );	
+		}
+		
 
 	}
 
@@ -268,15 +274,14 @@ class Rtcontributors_Admin {
 			
 			$o ='';
 
-			$coAuthors = get_post_meta( $post_id, 'rtcc_coauthors', true );
+			$coAuthors = get_post_meta( $post_id, 'rtcc_coauthors' );
 			if($coAuthors=="") return;
-			$coAuthors = explode( ',', $coAuthors );
 			
 			foreach ($coAuthors as $coAuthor) {
-				$o .= get_userdata( $coAuthor )->display_name.' ,';	
+				$o .= get_userdata( $coAuthor )->display_name.', ';	
 			}
 
-			echo substr($o,0,$o.length-1);
+			echo substr($o,0,$o.length-2);
 			
 		}
 

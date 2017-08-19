@@ -161,7 +161,7 @@ class Rtcontributors {
 		//to add content to the above generated column
 		$this->loader->add_action( 'manage_'.$post_type.'s_custom_column', $plugin_admin,'rtcc_add_content_to_author_column', 10, 2 );
 
-
+		
 
 
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'rtcc_add_contributors_metabox' );
@@ -181,6 +181,10 @@ class Rtcontributors {
 	private function define_public_hooks() {
 
 		$plugin_public = new Rtcontributors_Public( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'pre_get_posts', $plugin_public,'rtcc_before_display_authors_page' );
+
+		$this->loader->add_action( 'the_posts', $plugin_public,'rtcc_before_display_authors_page_helper' );		
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );

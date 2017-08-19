@@ -19,20 +19,7 @@
 		sortList = $( "#sortable" );
 		errorPlace = $('#rtc-upload-images-meta');
 	    
-	    sortList.sortable({
-	    	update: function( event, ui ){
-
-	    		/* 
-	    		 * This code would update the order usin AJAX */
-
-	    		// if ( document.getElementById('save-post') ) {
-	    		// 	update_post( 'draft', 'Order Saved' );	
-	    		// } else {
-	    		// 	update_post( 'publish', 'Order Saved' );	
-	    		// }
-	    		
-	    	}
-	    });
+	    sortList.sortable();
 	    // $( "#sortable" ).disableSelection();
   	} );
 
@@ -40,42 +27,42 @@
   	// scrip that displays media uploader
   	jQuery(document).ready(function($){
 
-  var mediaUploader;
+	  var mediaUploader;
 
-  $('#upload-button').click(function(e) {
-	    e.preventDefault();
-	    // If the uploader object has already been created, reopen the dialog
-	      if (mediaUploader) {
-	      mediaUploader.open();
-	      return;
-	    }
-	    // Extend the wp.media object
-	    mediaUploader = wp.media.frames.file_frame = wp.media({
-	      title: 'Choose Image',
-	      button: {
-	      text: 'Choose Image'
-	    }, multiple: true });
+	  $('#upload-button').click(function(e) {
+		    e.preventDefault();
+		    // If the uploader object has already been created, reopen the dialog
+		      if (mediaUploader) {
+		      mediaUploader.open();
+		      return;
+		    }
+		    // Extend the wp.media object
+		    mediaUploader = wp.media.frames.file_frame = wp.media({
+		      title: 'Choose Image',
+		      button: {
+		      text: 'Choose Image'
+		    }, multiple: true });
 
-	    // When a file is selected, add it to the custom_metabox
-	    mediaUploader.on('select', function() {
-	    	//Add the uploaded images to the display box (custom_metabox);
-	    	var attachment =  mediaUploader.state().get('selection').toJSON();
-	    	for(var i=0 ; i<attachment.length; i++ ) {
-	    		var li = document.createElement('li');
-	    		var im = document.createElement('img');
-	    		im.src = attachment[i].url;
-	    		li.appendChild(im);
-	    		li.className = "";
-	    		li.style = "";
-	    		$('#sortable').append(li);
-	    	}
+		    // When a file is selected, add it to the custom_metabox
+		    mediaUploader.on('select', function() {
+		    	//Add the uploaded images to the display box (custom_metabox);
+		    	var attachment =  mediaUploader.state().get('selection').toJSON();
+		    	for(var i=0 ; i<attachment.length; i++ ) {
+		    		var li = document.createElement('li');
+		    		var im = document.createElement('img');
+		    		im.src = attachment[i].url;
+		    		li.appendChild(im);
+		    		li.className = "ui-state-default";
+		    		// li.style = "";
+		    		$('#sortable').append(li);
+		    	}
 
-	    	addDeleteButton();
-	    
-	    });
-	    // Open the uploader dialog
-	    mediaUploader.open();
-	  });
+		    	addDeleteButton();
+		    
+		    });
+		    // Open the uploader dialog
+		    mediaUploader.open();
+		});
 
 	});
 

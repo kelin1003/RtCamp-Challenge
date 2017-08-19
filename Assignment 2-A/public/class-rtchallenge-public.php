@@ -100,4 +100,9 @@ class Rtchallenge_Public {
 
 	}
 
+	public function exclude_ptype_image( $query ) {
+		// var_dump( $query );
+		// die();
+	}
+
 }

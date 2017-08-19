@@ -7,10 +7,9 @@
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
+  max-width: 450px;
   position: relative;
   margin: auto;
-  width: 450px !important;
 
 }
 
